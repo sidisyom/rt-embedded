@@ -1,16 +1,17 @@
 with "config/microcontrollers_config.gpr";
+
 project Microcontrollers is
 
-   for Source_Dirs use ("src/**", "config/");
+   for Source_Dirs use ("src/**", "config");
    for Object_Dir use "obj/" & Microcontrollers_Config.Build_Profile;
    for Create_Missing_Dirs use "True";
    for Exec_Dir use "bin";
-   for Main use ("microcontrollers.adb");
+   for Main use ("main.adb");
    for Target use "arm-eabi";
    for Runtime ("ada") use "ravenscar-full-stm32f429disco";
 
    package Compiler is
-      for Default_Switches ("Ada") use Microcontrollers_Config.Ada_Compiler_Switches;
+      for Default_Switches ("ada") use Microcontrollers_Config.Ada_Compiler_Switches;
    end Compiler;
 
    package Binder is
@@ -22,3 +23,4 @@ project Microcontrollers is
    end Install;
 
 end Microcontrollers;
+

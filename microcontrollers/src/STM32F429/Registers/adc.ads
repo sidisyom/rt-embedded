@@ -17,7 +17,8 @@ package ADC is
    ADC1_SQR2_Address : constant := ADC1_Base_Address + 16#30#;
    ADC1_SQR3_Address  : constant := ADC1_Base_Address + 16#34#;
    ADC1_DR_Address    : constant := ADC1_Base_Address + 16#4C#;
-      
+   ADC_CSR_Address    : constant := ADC1_Base_Address + 16#300#;
+         
    type ADC_SR_Register is
       record
          AWD : Common_Types.Bit_State;
@@ -262,6 +263,56 @@ package ADC is
          Unmapped at 0 range 30 .. 31;
       end record;
    
+   type ADC_CSR_Register is
+      record
+         AWD1 : Common_Types.Bit_State;
+         EOC1 : Common_Types.Bit_State;
+         JEOC1 : Common_Types.Bit_State;
+         JSTRT1 : Common_Types.Bit_State;
+         STRT1 : Common_Types.Bit_State;
+         OVR1   : Common_Types.Bit_State;
+         Unmapped1 : Common_Types.Arbitrary_Unmapped_Space (1 .. 2);
+         AWD2      : Common_Types.Bit_State;
+         EOC2      : Common_Types.Bit_State;
+         JEOC2      : Common_Types.Bit_State;
+         JSTRT2      : Common_Types.Bit_State;
+         STRT2      : Common_Types.Bit_State;
+         OVR2        : Common_Types.Bit_State;
+         Unmapped2   : Common_Types.Arbitrary_Unmapped_Space (1 .. 2);
+         AWD3        : Common_Types.Bit_State;
+         EOC3        : Common_Types.Bit_State;
+         JEOC3        : Common_Types.Bit_State;
+         JSTRT3        : Common_Types.Bit_State;
+         STRT3        : Common_Types.Bit_State;
+         OVR3          : Common_Types.Bit_State;
+         Unmapped3   : Common_Types.Arbitrary_Unmapped_Space (1 .. 10);
+      end record  with Volatile, Object_Size => 32;
+   
+   for ADC_CSR_Register use
+      record
+         AWD1 at 0 range 0 .. 0;
+         EOC1 at 0 range 1 .. 1;
+         JEOC1 at 0 range 2 .. 2;
+         JSTRT1 at 0 range 3 .. 3;
+         STRT1 at 0 range 4 .. 4;
+         OVR1 at 0 range 5 .. 5;
+         Unmapped1 at 0 range 6 .. 7;
+         AWD2 at 0 range 8 .. 8;
+         EOC2 at 0 range 9 .. 9;
+         JEOC2 at 0 range 10 .. 10;
+         JSTRT2 at 0 range 11 .. 11;
+         STRT2 at 0 range 12 .. 12;
+         OVR2 at 0 range 13 .. 13;
+         Unmapped2 at 0 range 14 .. 15;
+         AWD3 at 0 range 16 .. 16;
+         EOC3 at 0 range 17 .. 17;
+         JEOC3 at 0 range 18 .. 18;
+         JSTRT3 at 0 range 19 .. 19;
+         STRT3 at 0 range 20 .. 20;
+         OVR3 at 0 range 21 .. 21;
+         Unmapped3 at 0 range 22 .. 31;
+      end record;
+   
    --   Access points
    ADC1_CR1_Reg       : ADC_CR1_Register with Address => System'To_Address (ADC1_CR1_Address);
    ADC1_CR2_Reg       : ADC_CR2_Register with Address => System'To_Address (ADC1_CR2_Address);
@@ -270,5 +321,7 @@ package ADC is
    ADC1_SQR3_Reg      : ADC_SQR3_Register with Address => System'To_Address (ADC1_SQR3_Address);
    ADC1_SMPR1_Reg     : ADC_SMPR1_Register with Address => System'To_Address (ADC1_SMPR1_Address);
    ADC1_SMPR2_Reg     : ADC_SMPR2_Register with Address => System'To_Address (ADC1_SMPR2_Address);
-   ADC1_DR_Reg        : Interfaces.Unsigned_16 with Address => System'To_Address (ADC1_DR_Address); --   Conversion data must be right-aligned (i.e. in "ADC_CR2")
+   ADC1_DR_Reg        : Interfaces.Unsigned_16 with Address => System'To_Address (ADC1_DR_Address); --   Conversion data must be right-aligned (i.e. in "ADC_CR2", also assume little-endian)
+   ADC1_SR_Reg        : ADC_SR_Register with Address => System'To_Address (ADC1_SR_Address);
+   ADC_CSR_Reg : ADC_CSR_Register with Address => System'To_Address (ADC_CSR_Address);
 end ADC;
