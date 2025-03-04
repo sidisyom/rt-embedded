@@ -28,7 +28,7 @@ package ADC is
          STRT  : Common_Types.Bit_State;
          OVR   : Common_Types.Bit_State;
          Unmapped : Common_Types.Arbitrary_Unmapped_Space (1 .. 26);
-      end record with Volatile, Object_Size => 32;
+      end record with Volatile_Full_Access, Object_Size => 32;
    for ADC_SR_Register use
       record
          AWD at 0 range 0 .. 0;
@@ -71,7 +71,10 @@ package ADC is
          RES     : Conversion_Resolution;
          OVRIE   : Common_Types.Bit_State;
          Unmapped2 : Common_Types.Arbitrary_Unmapped_Space (1 .. 5);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    for ADC_CR1_Register use
       record
          AWDCH at 0 range 0 .. 4;
@@ -123,7 +126,10 @@ package ADC is
          EXTEN     : Regular_Channels_External_Trigger;
          SWSTART   : Common_Types.Bit_State;
          Unmapped4 : Common_Types.Arbitrary_Unmapped_Space (1 .. 1);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    for ADC_CR2_Register use
       record
          ADON at 0 range 0 .. 0;
@@ -158,7 +164,10 @@ package ADC is
          SMP17 : Channel_Sampling_Time;
          SMP18 : Channel_Sampling_Time;
          Unmapped : Common_Types.Arbitrary_Unmapped_Space (1 .. 5);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    for ADC_SMPR1_Register use
       record
          SMP10 at 0 range 0 .. 2;
@@ -186,7 +195,10 @@ package ADC is
          SMP8 : Channel_Sampling_Time;
          SMP9 : Channel_Sampling_Time;
          Unmapped : Common_Types.Arbitrary_Unmapped_Space (1 .. 2);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    for ADC_SMPR2_Register use
       record
          SMP0 at 0 range 0 .. 2;
@@ -210,7 +222,10 @@ package ADC is
          SQ16 : Common_Types.ADC_Channel;
          L    : Common_Types.Conversion_Count;
          Unmapped : Common_Types.Arbitrary_Unmapped_Space (1 .. 8);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access,
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    for ADC_SQR1_Register use
       record
          SQ13 at 0 range 0 .. 4;
@@ -230,7 +245,10 @@ package ADC is
          SQ11 : Common_Types.ADC_Channel;
          SQ12 : Common_Types.ADC_Channel;
          Unmapped : Common_Types.Arbitrary_Unmapped_Space (1 .. 2);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    for ADC_SQR2_Register use
       record
          SQ7 at 0 range 0 .. 4;
@@ -251,7 +269,10 @@ package ADC is
          SQ5 : Common_Types.ADC_Channel;
          SQ6 : Common_Types.ADC_Channel;
          Unmapped : Common_Types.Arbitrary_Unmapped_Space (1 .. 2);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access,
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    for ADC_SQR3_Register use
       record
          SQ1 at 0 range 0 .. 4;
@@ -286,7 +307,10 @@ package ADC is
          STRT3        : Common_Types.Bit_State;
          OVR3          : Common_Types.Bit_State;
          Unmapped3   : Common_Types.Arbitrary_Unmapped_Space (1 .. 10);
-      end record  with Volatile, Object_Size => 32;
+      end record  with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    
    for ADC_CSR_Register use
       record

@@ -97,7 +97,10 @@ package RCC is
          PLLI2SON : Bit_State;
          PLLI2SRDY : Bit_State;
          Unmapped4 : Arbitrary_Unmapped_Space (1 .. 4);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    
    for RCC_CR_Register use
       record
@@ -130,7 +133,10 @@ package RCC is
          MCO1PRE : MCO1_Prescaler;
          MCO2PRE : MCO1_Prescaler;
          MCO2 : MCO2_Clock_Source;
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    
    for RCC_CFGR_Register use
       record
@@ -160,7 +166,10 @@ package RCC is
          GPIO_PORT_H : Peripheral_State;
          GPIO_PORT_I : Peripheral_State;
          Unmapped : Arbitrary_Unmapped_Space (1 .. 23);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    
    for RCC_AHB1ENR_Register use
       record
@@ -187,7 +196,10 @@ package RCC is
          Unmapped3 : Arbitrary_Unmapped_Space (1 .. 1);
          PLLQ : PLLQ_Values;
          Unmapped4 : Arbitrary_Unmapped_Space (1 .. 4);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    
    for RCC_PLLCFGR_Register use
       record
@@ -234,7 +246,10 @@ package RCC is
          DAC_EN : Bit_State;
          UART7_EN : Bit_State;
          UART8_EN : Bit_State;
-      end record with Object_Size => 32, Volatile;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    
    for RCC_APB1ENR_Register use
       record
@@ -296,7 +311,10 @@ package RCC is
          Unmapped_5 : Arbitrary_Unmapped_Space (1 .. 3);
          LTDC_EN : Bit_State;
          Unmapped_6 : Arbitrary_Unmapped_Space (1 .. 5);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    
    for RCC_APB2ENR_Register use
       record

@@ -10,7 +10,7 @@ package Common_Types is
    for Bit_State use (Off => 2#0#,
                       On => 2#1#);
    
-   type GPIO_Port is (A, B, C, D, E, F, G, H, I);
+   type GPIO_Port is (A, B, C, D, E, F, G, H, I) with Size => 4;
    for GPIO_Port use (A => 0,
                       B => 1,
                       C => 2,

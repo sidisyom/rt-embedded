@@ -66,6 +66,7 @@ package GPIO is
    
    type MODER_Register is array (GPIO_Pin) of Pin_Mode with
      Volatile_Components,
+     Volatile_Full_Access,
      Size => 32,
      Component_Size => 2;
    
@@ -88,7 +89,10 @@ package GPIO is
          OT14 : Bit_State;
          OT15 : Bit_State;
          Unmapped : Arbitrary_Unmapped_Space (1 .. 16);
-      end record with Volatile, Object_Size => 32;
+      end record with 
+     Volatile_Full_Access, 
+     Bit_Order => System.Low_Order_First,
+     Object_Size => 32;
    
    for OTYPER_Register use
       record
@@ -113,6 +117,7 @@ package GPIO is
    
    type OSPEEDR_Register is array (GPIO_Pin) of Port_Speed with
      Volatile_Components,
+     Volatile_Full_Access,
      Size => 32,
      Component_Size => 2;
          
@@ -120,7 +125,7 @@ package GPIO is
       record
          Pin_Values : Compact_Pins;
          Unmapped : Byte_Unmapped_Space (1 .. 2) with Unreferenced;
-      end record with Volatile, Object_Size => 32;
+      end record with Volatile_Full_Access, Object_Size => 32;
    
    for Pin_Values use
       record
@@ -130,6 +135,7 @@ package GPIO is
    
    type PUPDR_Register is array (GPIO_Pin) of Pull_Configuration with
      Volatile_Components,
+     Volatile_Full_Access,
      Size => 32,
      Component_Size => 2;
       
