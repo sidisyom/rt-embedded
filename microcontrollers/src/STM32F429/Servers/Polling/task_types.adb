@@ -4,6 +4,11 @@ with GPIO;
 with ADC;
 with Common_Values;
 with Task_Control;
+with SYSCFG;
+with EXTI;
+with Interrupt_Handlers;
+
+with Interfaces; --  TODO: Remove
 
 package body Task_Types is
    --   Emulates some typical work carried out by a task by reading an ADC-converted value (i.e. the "sensor")
@@ -29,7 +34,7 @@ package body Task_Types is
          RCC.RCC_AHB1ENR_Reg.GPIO_PORT_A := Common_Types.Enabled;
          GPIO.GPIO_Registers (Port_A).MODER (Pin_1) := GPIO.Analog; --   i.e. the external analog voltage pin
       end Setup_Ports_And_Pins;
-      
+
       --   ADC1 setup
       procedure Setup_ADC_Module is
       begin
@@ -72,4 +77,29 @@ package body Task_Types is
          --  delay 1.0; The periodic delay value
       end loop;
    end ADC_Handler;
+
+   task body EXTI4_Handler is
+      procedure Setup_External_Interrupt is
+      begin
+         RCC.RCC_APB2ENR_Reg.SYSCFG_EN := Common_Types.On; --   Turn-on system configuration controller clock
+         SYSCFG.SYSCFG_EXTICR_Regs (2).EXTIO := SYSCFG.PB; --   Setting-up for PB4
+         EXTI.EXTI_FTSR_Reg.TR4 := Common_Types.On;
+         EXTI.EXTI_IMR_Reg.MR4 := Common_Types.On; -- Enable interrupt initially
+      end Setup_External_Interrupt;
+   begin
+      --   Wait here till system is ready
+      Task_Control.IC.Wait_For_Initialization;
+      Setup_External_Interrupt;
+      loop
+         declare
+            T : Interfaces.Unsigned_32 := 0;
+         begin
+            Interrupt_Handlers.EIH.Wait_For_Next_Interrupt;
+         exception
+            when others =>
+               T := Interfaces."+" (T, 1);
+         end;
+         --   Calculate new record object and add to queue
+      end loop;
+   end EXTI4_Handler;
 end Task_Types;
