@@ -16,7 +16,7 @@ package body Task_Types is
    task body ADC_Handler is
       type Pin_Bits is new Integer range 1 .. 4;
       type Value_Bits is array (Pin_Bits) of Boolean with Component_Size => 1;
-      Pins               : Value_Bits with Address => Common_Values.Measured_ADC_Value'Address;
+      Pins : Value_Bits with Address => Common_Values.Measured_ADC_Value'Address;
       Port_G : constant Common_Types.GPIO_Port := Common_Types.G;
       Pin_Set : constant array (Pin_Bits) of Common_Types.GPIO_Pin := (9, 11, 13, 15); --   "Actuator" pins
                         
@@ -47,9 +47,9 @@ package body Task_Types is
          ADC.ADC1_SQR1_Reg.L := 0; --   Value zero corresponds to one conversion, according to RM
          ADC.ADC1_SQR3_Reg.SQ1 := 1; --   Set conversion channel "1"
          ADC.ADC1_CR2_Reg.ADON := Common_Types.On; --   Turn ADC module on
-         ADC.ADC1_CR2_Reg.CONT := Common_Types.On; --   Set convert continuosly
-         ADC.ADC1_CR1_Reg.EOCIE := Common_Types.Off; --   Enable interrupts
-         --  ADC.ADC1_CR2_Reg.SWSTART := Common_Types.On; --   Start conversions
+         ADC.ADC1_CR2_Reg.CONT := Common_Types.On; --   Set convert continuosly/one-shot
+         ADC.ADC1_CR1_Reg.EOCIE := Common_Types.On; --   Enable/Disable interrupts
+         ADC.ADC1_CR2_Reg.SWSTART := Common_Types.On; --   Start conversions
       end Setup_ADC_Module;
             
       procedure Set_Pins is
@@ -68,15 +68,14 @@ package body Task_Types is
       --   And here till all tasks arrive at their critical instant
       --   TODO
       loop
-         ADC.ADC1_CR2_Reg.SWSTART := Common_Types.On;
-         loop
-            exit when ADC.ADC1_SR_Reg.EOC = Common_Types.On;
-         end loop;
+         Interrupt_Handlers.ADCH.Wait_For_Next_Interrupt;
          Common_Values.Measured_ADC_Value := ADC.ADC1_DR_Reg;
          --  Set_Pins; --   values in "Pins" are memory-mapped to the converted value (see declaration of "Pins")
          --  delay 1.0; The periodic delay value
       end loop;
    end ADC_Handler;
+   
+   --   EXTI4 Handler
 
    task body EXTI4_Handler is
       procedure Setup_External_Interrupt is
@@ -94,7 +93,8 @@ package body Task_Types is
          declare
             T : Interfaces.Unsigned_32 := 0;
          begin
-            Interrupt_Handlers.EIH.Wait_For_Next_Interrupt;
+            null;
+            --  Interrupt_Handlers.EIH.Wait_For_Next_Interrupt;
          exception
             when others =>
                T := Interfaces."+" (T, 1);
