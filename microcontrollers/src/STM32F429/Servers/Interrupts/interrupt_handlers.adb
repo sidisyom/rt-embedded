@@ -7,11 +7,6 @@ package body Interrupt_Handlers is
 
    protected body ADC_Interrupt_Handler is
 
-      entry Wait_For_Next_Interrupt when Arrived is
-      begin
-         Arrived := False;
-      end Wait_For_Next_Interrupt;
-
       procedure Handle_Interrupt is
          use Ada.Real_Time;
       begin
@@ -20,7 +15,6 @@ package body Interrupt_Handlers is
          ADC.ADC1_CR1_Reg.EOCIE := Common_Types.Off; --  Disable interrupts
 
          Ada.Real_Time.Timing_Events.Set_Handler (Event, Ada.Real_Time.Clock + MIT.all, Handle_Timeout'Access); -- setup interrupt-enable event to fire after MIT
-         Arrived := True;
       end Handle_Interrupt;
 
       procedure Handle_Timeout (E : in out Ada.Real_Time.Timing_Events.Timing_Event) is

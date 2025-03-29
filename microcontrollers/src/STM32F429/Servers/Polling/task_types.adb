@@ -8,18 +8,17 @@ with SYSCFG;
 with EXTI;
 with Interrupt_Handlers;
 
-with Interfaces; --  TODO: Remove
-
 package body Task_Types is
    --   Emulates some typical work carried out by a task by reading an ADC-converted value (i.e. the "sensor")
    --   and mapping the constituent bits of this value to a number of GPIO pins (the "actuator").
+   --   Task is periodic.
    task body ADC_Handler is
       type Pin_Bits is new Integer range 1 .. 4;
       type Value_Bits is array (Pin_Bits) of Boolean with Component_Size => 1;
       Pins : Value_Bits with Address => Common_Values.Measured_ADC_Value'Address;
       Port_G : constant Common_Types.GPIO_Port := Common_Types.G;
       Pin_Set : constant array (Pin_Bits) of Common_Types.GPIO_Pin := (9, 11, 13, 15); --   "Actuator" pins
-                        
+
       procedure Setup_Ports_And_Pins is
          --   According to Datasheet "PA1" is bound to "ADC123_IN1" ("ADC1" will be used here)
          Port_A : constant Common_Types.GPIO_Port := Common_Types.A;
@@ -51,7 +50,7 @@ package body Task_Types is
          ADC.ADC1_CR1_Reg.EOCIE := Common_Types.On; --   Enable/Disable interrupts
          ADC.ADC1_CR2_Reg.SWSTART := Common_Types.On; --   Start conversions
       end Setup_ADC_Module;
-            
+
       procedure Set_Pins is
       begin
          for I in Pin_Set'Range loop
@@ -59,24 +58,33 @@ package body Task_Types is
               (if Pins (I) then Common_Types.On else Common_Types.Off);
          end loop;
       end Set_Pins;
-      use Common_Types;
+
+      Next_Activation : Ada.Real_Time.Time := Ada.Real_Time.Clock;
+      use Ada.Real_Time;
    begin
       --   Wait here till system is ready
       Task_Control.IC.Wait_For_Initialization;
       Setup_Ports_And_Pins;
       Setup_ADC_Module;
       --   And here till all tasks arrive at their critical instant
-      --   TODO
+      --   TODO: Implement when more than one period tasks are declared
       loop
-         Interrupt_Handlers.ADCH.Wait_For_Next_Interrupt;
-         Common_Values.Measured_ADC_Value := ADC.ADC1_DR_Reg;
-         --  Set_Pins; --   values in "Pins" are memory-mapped to the converted value (see declaration of "Pins")
-         --  delay 1.0; The periodic delay value
+         Set_Pins; --   values in "Pins" are memory-mapped to the converted value (see declaration of "Pins")
+
+         declare
+            Vref : constant Float := 3.3;
+            Actual_Volts : Float := 0.0;
+         begin
+            Actual_Volts := Float (Common_Values.Measured_ADC_Value) * (Vref / Float (4096));
+            Actual_Volts := 0.0;
+         end;
+
+         Next_Activation := Next_Activation + Period.all;
+         delay until Next_Activation;
       end loop;
    end ADC_Handler;
-   
-   --   EXTI4 Handler
 
+   --   EXTI4 Handler (Driven by interrupt handler entry)
    task body EXTI4_Handler is
       procedure Setup_External_Interrupt is
       begin
@@ -90,15 +98,7 @@ package body Task_Types is
       Task_Control.IC.Wait_For_Initialization;
       Setup_External_Interrupt;
       loop
-         declare
-            T : Interfaces.Unsigned_32 := 0;
-         begin
-            null;
-            --  Interrupt_Handlers.EIH.Wait_For_Next_Interrupt;
-         exception
-            when others =>
-               T := Interfaces."+" (T, 1);
-         end;
+         Interrupt_Handlers.EIH.Wait_For_Next_Interrupt;
          --   Calculate new record object and add to queue
       end loop;
    end EXTI4_Handler;

@@ -6,6 +6,6 @@ package Task_Control is
    private
       OK : Boolean := False;
    end Initialization_Control;
-   
+
    IC : Initialization_Control;
 end Task_Control;
