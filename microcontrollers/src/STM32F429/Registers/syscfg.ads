@@ -49,5 +49,5 @@ package SYSCFG is
    
    type SYSCFG_EXTICR_Bank is array (1 .. 4) of SYSCFG_EXTICR_Register with Volatile, Component_Size => 32;
       
-   SYSCFG_EXTICR_Regs : aliased SYSCFG_EXTICR_Bank with Address => System'To_Address (Base_Address + EXTICR_Offset);
+   SYSCFG_EXTICR_Regs : aliased SYSCFG_EXTICR_Bank with Import, Address => System'To_Address (Base_Address + EXTICR_Offset);
 end SYSCFG;

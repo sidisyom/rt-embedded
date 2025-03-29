@@ -187,7 +187,7 @@ package EXTI is
          Unmapped at 0 range 23 .. 31;
       end record;
       
-   EXTI_IMR_Reg : EXTI_IMR_Register with Address => System'To_Address (Base_Address + EXTI_IMR_Offset);
-   EXTI_FTSR_Reg : EXTI_FTSR_Register with Address => System'To_Address (Base_Address + EXTI_FTSR_Offset);
-   EXTI_PR_Reg : EXTI_PR_Register with Address => System'To_Address (Base_Address + EXTI_PR_Offset);
+   EXTI_IMR_Reg : EXTI_IMR_Register with Import, Address => System'To_Address (Base_Address + EXTI_IMR_Offset);
+   EXTI_FTSR_Reg : EXTI_FTSR_Register with Import, Address => System'To_Address (Base_Address + EXTI_FTSR_Offset);
+   EXTI_PR_Reg : EXTI_PR_Register with Import, Address => System'To_Address (Base_Address + EXTI_PR_Offset);
 end EXTI;

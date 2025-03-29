@@ -180,5 +180,5 @@ package GPIO is
    Green_LED_Port : constant GPIO_Port := G;
    Green_LED_Pin : constant GPIO_Pin := 13;
    
-   GPIO_Registers : GPIO_Registers_Array with Address => System'To_Address (Base_Address);
+   GPIO_Registers : GPIO_Registers_Array with Import, Address => System'To_Address (Base_Address);
 end GPIO;

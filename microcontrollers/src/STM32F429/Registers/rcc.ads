@@ -344,10 +344,10 @@ package RCC is
          Unmapped_6 at 0 range 27 .. 31;
       end record;
    
-   RCC_CR_Reg : RCC_CR_Register with Address => System'To_Address (Base_Address + RCC_CR_Offset);
-   RCC_CFGR_Reg : RCC_CFGR_Register with Address => System'To_Address (Base_Address + RCC_CFGR_Offset);
-   RCC_AHB1ENR_Reg : RCC_AHB1ENR_Register with Address => System'To_Address (Base_Address + RCC_AHB1ENR_Offset);
-   RCC_PLLCFGR_Reg : RCC_PLLCFGR_Register with Address => System'To_Address (Base_Address + RCC_PLLCFGR_Offset);
-   RCC_APB1ENR_Reg : RCC_APB1ENR_Register with Address => System'To_Address (Base_Address + RCC_APB1ENR_Offset);
-   RCC_APB2ENR_Reg : RCC_APB2ENR_Register with Address => System'To_Address (Base_Address + RCC_APB2ENR_Offset);
+   RCC_CR_Reg : RCC_CR_Register with Import, Address => System'To_Address (Base_Address + RCC_CR_Offset);
+   RCC_CFGR_Reg : RCC_CFGR_Register with Import, Address => System'To_Address (Base_Address + RCC_CFGR_Offset);
+   RCC_AHB1ENR_Reg : RCC_AHB1ENR_Register with Import, Address => System'To_Address (Base_Address + RCC_AHB1ENR_Offset);
+   RCC_PLLCFGR_Reg : RCC_PLLCFGR_Register with Import, Address => System'To_Address (Base_Address + RCC_PLLCFGR_Offset);
+   RCC_APB1ENR_Reg : RCC_APB1ENR_Register with Import, Address => System'To_Address (Base_Address + RCC_APB1ENR_Offset);
+   RCC_APB2ENR_Reg : RCC_APB2ENR_Register with Import, Address => System'To_Address (Base_Address + RCC_APB2ENR_Offset);
 end RCC;

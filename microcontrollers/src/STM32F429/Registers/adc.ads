@@ -338,14 +338,14 @@ package ADC is
       end record;
    
    --   Access points
-   ADC1_CR1_Reg       : ADC_CR1_Register with Address => System'To_Address (ADC1_CR1_Address);
-   ADC1_CR2_Reg       : ADC_CR2_Register with Address => System'To_Address (ADC1_CR2_Address);
-   ADC1_SQR1_Reg      : ADC_SQR1_Register with Address => System'To_Address (ADC1_SQR1_Address);
-   ADC1_SQR2_Reg      : ADC_SQR2_Register with Address => System'To_Address (ADC1_SQR2_Address);
-   ADC1_SQR3_Reg      : ADC_SQR3_Register with Address => System'To_Address (ADC1_SQR3_Address);
-   ADC1_SMPR1_Reg     : ADC_SMPR1_Register with Address => System'To_Address (ADC1_SMPR1_Address);
-   ADC1_SMPR2_Reg     : ADC_SMPR2_Register with Address => System'To_Address (ADC1_SMPR2_Address);
-   ADC1_DR_Reg        : Interfaces.Unsigned_16 with Address => System'To_Address (ADC1_DR_Address); --   Conversion data must be right-aligned (i.e. in "ADC_CR2", also assume little-endian)
-   ADC1_SR_Reg        : ADC_SR_Register with Address => System'To_Address (ADC1_SR_Address);
-   ADC_CSR_Reg : ADC_CSR_Register with Address => System'To_Address (ADC_CSR_Address);
+   ADC1_CR1_Reg       : ADC_CR1_Register with Import, Address => System'To_Address (ADC1_CR1_Address);
+   ADC1_CR2_Reg       : ADC_CR2_Register with Import, Address => System'To_Address (ADC1_CR2_Address);
+   ADC1_SQR1_Reg      : ADC_SQR1_Register with Import, Address => System'To_Address (ADC1_SQR1_Address);
+   ADC1_SQR2_Reg      : ADC_SQR2_Register with Import, Address => System'To_Address (ADC1_SQR2_Address);
+   ADC1_SQR3_Reg      : ADC_SQR3_Register with Import, Address => System'To_Address (ADC1_SQR3_Address);
+   ADC1_SMPR1_Reg     : ADC_SMPR1_Register with Import, Address => System'To_Address (ADC1_SMPR1_Address);
+   ADC1_SMPR2_Reg     : ADC_SMPR2_Register with Import, Address => System'To_Address (ADC1_SMPR2_Address);
+   ADC1_DR_Reg        : Interfaces.Unsigned_16 with Import, Address => System'To_Address (ADC1_DR_Address); --   Conversion data must be right-aligned (i.e. in "ADC_CR2", also assume little-endian)
+   ADC1_SR_Reg        : ADC_SR_Register with Import, Address => System'To_Address (ADC1_SR_Address);
+   ADC_CSR_Reg : ADC_CSR_Register with Import, Address => System'To_Address (ADC_CSR_Address);
 end ADC;
