@@ -4,7 +4,7 @@ with Interfaces;
 
 package RNG is
 
-   RGN_Base_Address : constant := 16#50060800#;
+   RNG_Base_Address : constant := 16#5006_0800#;
    RNG_CR_Offset    : constant := 16#00#;
    RNG_SR_Offset    : constant := 16#04#;
    RNG_DR_Offset    : constant := 16#08#;
@@ -66,7 +66,7 @@ package RNG is
          RNDATA at 0 range 0 .. 31;
       end record;
 
-   RNG_CR_Reg : RNG_CR_Register with Import, Address => System'To_Address (RGN_Base_Address + RNG_CR_Offset);
-   RNG_SR_Reg : RNG_SR_Register with Import, Address => System'To_Address (RGN_Base_Address + RNG_SR_Offset);
-   RNG_DR_Reg : RNG_DR_Register with Import, Address => System'To_Address (RGN_Base_Address + RNG_DR_Offset);
+   RNG_CR_Reg : RNG_CR_Register with Import, Address => System'To_Address (RNG_Base_Address + RNG_CR_Offset);
+   RNG_SR_Reg : RNG_SR_Register with Import, Address => System'To_Address (RNG_Base_Address + RNG_SR_Offset);
+   RNG_DR_Reg : RNG_DR_Register with Import, Address => System'To_Address (RNG_Base_Address + RNG_DR_Offset);
 end RNG;
