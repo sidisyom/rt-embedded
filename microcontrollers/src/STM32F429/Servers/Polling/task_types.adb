@@ -7,6 +7,7 @@ with Task_Control;
 with SYSCFG;
 with EXTI;
 with Interrupt_Handlers;
+with RNG;
 
 package body Task_Types is
    --   Emulates some typical work carried out by a task by reading an ADC-converted value (i.e. the "sensor")
@@ -84,7 +85,7 @@ package body Task_Types is
       end loop;
    end ADC_Handler;
 
-   --   EXTI4 Handler (Driven by interrupt handler entry)
+   --   EXTI4 Handler (Driven by interrupt handler entry which is sporadic)
    task body EXTI4_Handler is
       procedure Setup_External_Interrupt is
       begin
@@ -93,10 +94,17 @@ package body Task_Types is
          EXTI.EXTI_FTSR_Reg.TR4 := Common_Types.On;
          EXTI.EXTI_IMR_Reg.MR4 := Common_Types.On; -- Enable interrupt initially
       end Setup_External_Interrupt;
+      procedure Setup_Random_Number_Generator is
+      begin
+         RCC.RCC_AHB2ENR_Reg.RNGEN := Common_Types.On; --   Turn RNG clock on
+         RNG.RNG_CR_Reg.IE := Common_Types.On; --   Enable interrupt
+         RNG.RNG_CR_Reg.RNGEN := Common_Types.On; --   Enable random number generation
+      end Setup_Random_Number_Generator;
+
    begin
-      --   Wait here till system is ready
-      Task_Control.IC.Wait_For_Initialization;
+      Task_Control.IC.Wait_For_Initialization; --   Wait here till system is ready
       Setup_External_Interrupt;
+      Setup_Random_Number_Generator;
       loop
          Interrupt_Handlers.EIH.Wait_For_Next_Interrupt;
          --   Calculate new record object and add to queue

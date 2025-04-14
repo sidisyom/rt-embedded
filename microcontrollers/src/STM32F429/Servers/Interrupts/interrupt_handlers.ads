@@ -4,6 +4,9 @@ with Ada.Real_Time;
 with Ada.Real_Time.Timing_Events;
 
 package Interrupt_Handlers with Elaborate_Body is
+
+   RNG_Clock_Configuration_Error : exception;
+
    --   ADC
    protected type ADC_Interrupt_Handler (MIT : access constant Ada.Real_Time.Time_Span) with
      Interrupt_Priority => System.Max_Interrupt_Priority is
@@ -27,10 +30,24 @@ package Interrupt_Handlers with Elaborate_Body is
       Arrived : Boolean;
    end EXTI4_Interrupt_Handler;
 
+   --   RNG
+   protected type RNG_Interrupt_Handler (MIT : access constant Ada.Real_Time.Time_Span) with
+     Interrupt_Priority => System.Max_Interrupt_Priority is
+   private
+      procedure Handle_Interrupt with
+        Attach_Handler => Ada.Interrupts.Names.HASH_RNG_Interrupt;
+      procedure Handle_Timeout (E : in out Ada.Real_Time.Timing_Events.Timing_Event);
+      Event : Ada.Real_Time.Timing_Events.Timing_Event;
+   end RNG_Interrupt_Handler;
+
+
    ADC_MIT : aliased Ada.Real_Time.Time_Span := Ada.Real_Time.Milliseconds (200);
    ADCH : ADC_Interrupt_Handler (MIT => ADC_MIT'Access);
 
-   EXTI4_MIT : aliased Ada.Real_Time.Time_Span := Ada.Real_Time.Milliseconds (100);
-   EIH : EXTI4_Interrupt_Handler (MIT => EXTI4_MIT'Access);
+   EXTI4_MIT : aliased Ada.Real_Time.Time_Span := Ada.Real_Time.Milliseconds (150);
+   EIH       : EXTI4_Interrupt_Handler (MIT => EXTI4_MIT'Access);
+
+   RNG_MIT : aliased Ada.Real_Time.Time_Span := Ada.Real_Time.Milliseconds (100);
+   RNGIH : RNG_Interrupt_Handler (MIT => RNG_MIT'Access);
 
 end Interrupt_Handlers;
