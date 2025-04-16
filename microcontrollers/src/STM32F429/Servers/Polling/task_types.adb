@@ -2,12 +2,11 @@ with Common_Types;
 with RCC;
 with GPIO;
 with ADC;
-with Common_Values;
-with Task_Control;
 with SYSCFG;
 with EXTI;
 with Interrupt_Handlers;
 with RNG;
+with Interfaces;
 
 package body Task_Types is
    --   Emulates some typical work carried out by a task by reading an ADC-converted value (i.e. the "sensor")
@@ -17,7 +16,7 @@ package body Task_Types is
       type Pin_Bits is new Integer range 1 .. 4;
       type Value_Bits is array (Pin_Bits) of Boolean with Component_Size => 1;
       Pins : Value_Bits with Address => Common_Values.Measured_ADC_Value'Address;
-      Port_G : constant Common_Types.GPIO_Port := Common_Types.G;
+      Port_G : Common_Types.GPIO_Port renames Common_Types.G;
       Pin_Set : constant array (Pin_Bits) of Common_Types.GPIO_Pin := (9, 11, 13, 15); --   "Actuator" pins
 
       procedure Setup_Ports_And_Pins is
@@ -44,7 +43,7 @@ package body Task_Types is
          ADC.ADC1_SMPR2_Reg.SMP1 := ADC.Cycles_3; --   Set sampling time for channel "1"
          ADC.ADC1_CR2_Reg.ALIGN := ADC.Right; --  Set conversion data alignment (also see register declaration)
          ADC.ADC1_CR1_Reg.DISCNUM := 0; --   000 => 1 Channel
-         ADC.ADC1_SQR1_Reg.L := 0; --   Value zero corresponds to one conversion, according to RM
+         ADC.ADC1_SQR1_Reg.L := 0; --   According to RM, value zero corresponds to one conversion
          ADC.ADC1_SQR3_Reg.SQ1 := 1; --   Set conversion channel "1"
          ADC.ADC1_CR2_Reg.ADON := Common_Types.On; --   Turn ADC module on
          ADC.ADC1_CR2_Reg.CONT := Common_Types.On; --   Set convert continuosly/one-shot
@@ -106,8 +105,50 @@ package body Task_Types is
       Setup_External_Interrupt;
       Setup_Random_Number_Generator;
       loop
-         Interrupt_Handlers.EIH.Wait_For_Next_Interrupt;
-         --   Calculate new record object and add to queue
+         declare
+            Job : constant Common_Types.Job := (Payload => Common_Values.Generated_Random);
+         begin
+            Worker_Queue.Put (Job);
+         end;
+         Interrupt_Handlers.EIH.Wait_For_Next_Interrupt; --   Effectively the period is the same as the interrupt handler
       end loop;
    end EXTI4_Handler;
+
+   task body Green_Light_Controller is
+      use Ada.Real_Time;
+      use Interfaces;
+
+      Green_Led_Port : Common_Types.GPIO_Port renames Common_Types.G;
+      Green_Led_Pin : constant Common_Types.GPIO_Pin := 13;
+
+      procedure Setup_Green_Led is
+      begin
+         --   According to user-manual, green light is bound to PG13
+         RCC.RCC_AHB1ENR_Reg.GPIO_PORT_G := Common_Types.Enabled;
+         GPIO.GPIO_Registers (Green_Led_Port).MODER (Green_Led_Pin) := GPIO.Output;
+      end Setup_Green_Led;
+
+      Next_Activation : Ada.Real_Time.Time := Ada.Real_Time.Clock;
+      Threshold : constant Interfaces.Unsigned_32 := Interfaces.Unsigned_32'Last / 3; --   Just some random threshold..
+   begin
+      Setup_Green_Led;
+      loop
+         declare
+            J   : Common_Types.Job;
+            V   : Boolean;
+         begin
+            Worker_Queue.Take (Job => J, Valid => V);
+            if V then
+               if J.Payload > Threshold then
+                  GPIO.GPIO_Registers (Green_Led_Port).ODR.Pin_Values (Green_Led_Pin) := Common_Types.On;
+               else
+                  GPIO.GPIO_Registers (Green_Led_Port).ODR.Pin_Values (Green_Led_Pin) := Common_Types.Off;
+               end if;
+            end if;
+         end;
+
+         Next_Activation := Next_Activation + Period.all;
+         delay until Next_Activation;
+      end loop;
+   end Green_Light_Controller;
 end Task_Types;
