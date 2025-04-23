@@ -129,21 +129,21 @@ package body Task_Types is
       end Setup_Green_Led;
 
       Next_Activation : Ada.Real_Time.Time := Ada.Real_Time.Clock;
-      Threshold : constant Interfaces.Unsigned_32 := Interfaces.Unsigned_32'Last / 3; --   Just some random threshold..
+      On_Threshold : constant Interfaces.Unsigned_32 := Interfaces.Unsigned_32'Last / 3; --   Just some random threshold..
    begin
       Setup_Green_Led;
       loop
          declare
-            J   : Common_Types.Job;
-            V   : Boolean;
+            R   :  Interfaces.Unsigned_32 := Common_Values.Generated_Random;
          begin
-            Worker_Queue.Take (Job => J, Valid => V);
-            if V then
-               if J.Payload > Threshold then
-                  GPIO.GPIO_Registers (Green_Led_Port).ODR.Pin_Values (Green_Led_Pin) := Common_Types.On;
-               else
-                  GPIO.GPIO_Registers (Green_Led_Port).ODR.Pin_Values (Green_Led_Pin) := Common_Types.Off;
-               end if;
+            for I in 1 .. 100 loop
+               R := R + Interfaces.Unsigned_32 (I);
+            end loop;
+
+            if R > On_Threshold then
+               GPIO.GPIO_Registers (Green_Led_Port).ODR.Pin_Values (Green_Led_Pin) := Common_Types.On;
+            else
+               GPIO.GPIO_Registers (Green_Led_Port).ODR.Pin_Values (Green_Led_Pin) := Common_Types.Off;
             end if;
          end;
 
