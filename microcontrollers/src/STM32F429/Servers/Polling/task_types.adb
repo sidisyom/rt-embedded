@@ -9,6 +9,27 @@ with RNG;
 with Interfaces;
 
 package body Task_Types is
+   task body Poller_Server is
+      Next_Activation : Ada.Real_Time.Time := Ada.Real_Time.Clock;
+      use type Ada.Real_Time.Time;
+   begin
+      loop
+         declare
+            J : Common_Types.Job;
+            Valid : Boolean := False;
+         begin
+            Worker_Queue.Take (J, Valid);
+
+            if Valid then
+               null;
+            end if;
+         end;
+
+         Next_Activation := Next_Activation + Period.all;
+         delay until Next_Activation;
+      end loop;
+   end Poller_Server;
+
    --   Emulates some typical work carried out by a task by reading an ADC-converted value (i.e. the "sensor")
    --   and mapping the constituent bits of this value to a number of GPIO pins (the "actuator").
    --   Task is periodic.
