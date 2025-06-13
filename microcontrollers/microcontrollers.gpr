@@ -9,6 +9,7 @@ project Microcontrollers is
    for Main use ("main.adb");
    for Target use "arm-eabi";
    for Runtime ("ada") use "ravenscar-full-stm32f429disco";
+   --  for Runtime ("ada") use "/home/savvas/.local/share/alire/toolchains/gnat_arm_elf_14.2.1_524d4d41/arm-eabi/lib/gnat/embedded-stm32f429disco";
 
    package Compiler is
       for Default_Switches ("ada") use Microcontrollers_Config.Ada_Compiler_Switches;

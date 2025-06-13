@@ -3,6 +3,9 @@ with ADC;
 with EXTI;
 with Common_Types;
 with RNG;
+with Ada.Synchronous_Barriers;
+
+with System.BB.CPU_Primitives;
 
 package body Interrupt_Handlers is
 
