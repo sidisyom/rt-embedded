@@ -149,9 +149,8 @@ package Registers.Stm32f4.Gpio is
          PUPDR : PUPDR_Register;
          IDR : Pin_Values;
          ODR : Pin_Values;
-         Unmapped2 : Hal.Unmapped_Range (1 .. 64); -- following 2 words worth of registers are currently unmapped
          AFRLH : AFRLH_Register;
-         Unmapped3 : Hal.Unmapped_Range (1 .. 7872); -- required for allignment on the 1024 boundary
+         Unmapped : Hal.Unmapped_Range (1 .. 7872); -- required for allignment on the 1024 boundary
       end record with
      Size => 16#400# * 8;
 
@@ -163,9 +162,8 @@ package Registers.Stm32f4.Gpio is
          PUPDR at 0 range 96 .. 127;
          IDR at 0 range 128 .. 159;
          ODR at 0 range 160 .. 191;
-         Unmapped2 at 0 range 192 .. 255;
          AFRLH at 0 range 256 .. 319;
-         Unmapped3 at 0 range 320 .. 8191;
+         Unmapped at 0 range 320 .. 8191;
       end record;
 
    type GPIO_Registers_Array is array (GPIO_Port) of GPIO_Register with

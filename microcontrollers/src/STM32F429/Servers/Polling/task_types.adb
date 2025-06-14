@@ -144,7 +144,7 @@ package body Task_Types is
 
       procedure Setup_Green_Led is
       begin
-         --   According to user-manual, green light is bound to PG13
+         --   According to user-manual, green light is bound to PG13a
          RCC.RCC_AHB1ENR_Reg.GPIO_PORT_G := Common_Types.Enabled;
          GPIO.GPIO_Registers (Green_Led_Port).MODER (Green_Led_Pin) := GPIO.Output;
       end Setup_Green_Led;

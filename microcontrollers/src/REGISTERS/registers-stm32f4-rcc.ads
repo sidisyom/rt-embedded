@@ -152,23 +152,18 @@ package Registers.Stm32f4.Rcc is
    type RCC_AHB1ENR_Register is
       record
          PORT_CLOCK_EN : Compact_Ports;
-         Unmapped1      : Hal.Unmapped_Range (1 .. 1);
          CRCEN          : Binary_State;
-         Unmapped2      : Hal.Unmapped_Range (1 .. 5);
          BKPSRAMEN      : Binary_State;
-         Unmapped3      : Hal.Unmapped_Range (1 .. 1);
          CCMDATARAMEN   : Binary_State;
          DMA1EN         : Binary_State;
          DMA2EN         : Binary_State;
          DMA2DEN        : Binary_State;
-         Unmapped4      : Hal.Unmapped_Range (1 .. 1);
          ETHMACEN       : Binary_State;
          ETHMACTXEN     : Binary_State;
          ETHMACRXEN     : Binary_State;
          ETHMACPTPEN    : Binary_State;
          OTGHSEN        : Binary_State;
          OTGHSULPIEN    : Binary_State;
-         Unmapped5      : Hal.Unmapped_Range (1 .. 1);
       end record with
      Volatile_Full_Access,
      Bit_Order => System.Low_Order_First,
@@ -177,23 +172,18 @@ package Registers.Stm32f4.Rcc is
    for RCC_AHB1ENR_Register use
       record
          PORT_CLOCK_EN at 0 range 0 .. 10;
-         Unmapped1 at 0 range 11 .. 11;
          CRCEN at 0 range 12 .. 12;
-         Unmapped2 at 0 range 13 .. 17;
          BKPSRAMEN at 0 range 18 .. 18;
-         Unmapped3 at 0 range 19 .. 19;
          CCMDATARAMEN at 0 range 20 .. 20;
          DMA1EN at 0 range 21 .. 21;
          DMA2EN at 0 range 22 .. 22;
          DMA2DEN at 0 range 23 .. 23;
-         Unmapped4 at 0 range 24 .. 24;
          ETHMACEN at 0 range 25 .. 25;
          ETHMACTXEN at 0 range 26 .. 26;
          ETHMACRXEN at 0 range 27 .. 27;
          ETHMACPTPEN at 0 range 28 .. 28;
          OTGHSEN at 0 range 29 .. 29;
          OTGHSULPIEN at 0 range 30 .. 30;
-         Unmapped5 at 0 range 31 .. 31;
       end record;
 
    type RCC_AHB2ENR_Register is

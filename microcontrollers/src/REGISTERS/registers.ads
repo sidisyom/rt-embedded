@@ -1,3 +1,2 @@
 package Registers with Pure
-is
-end Registers;
+is end Registers;
