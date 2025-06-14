@@ -81,17 +81,14 @@ package Registers.Stm32f4.Rcc is
       record
          HSI_On : Binary_State;
          HSI_Rdy : Binary_State;
-         Unmapped1 : Hal.Unmapped_Range (1 .. 1);
          HSITRIM : HSITRIM_Value;
-         Unmapped2 : Hal.Unmapped_Range (1 .. 8);
          HSE_On : Binary_State;
          HSE_Rdy : Binary_State;
-         Unmapped3 : Hal.Unmapped_Range (1 .. 6);
          PLLON : Binary_State;
          PLLRDY : Binary_State;
          PLLI2SON : Binary_State;
          PLLI2SRDY : Binary_State;
-         Unmapped4 : Hal.Unmapped_Range (1 .. 4);
+         Unmapped : Hal.Unmapped_Range (1 .. 4);
       end record with
      Volatile_Full_Access,
      Bit_Order => System.Low_Order_First,
@@ -101,17 +98,14 @@ package Registers.Stm32f4.Rcc is
       record
          HSI_On at 0 range 0 .. 0;
          HSI_Rdy at 0 range 1 .. 1;
-         Unmapped1 at 0 range 2 .. 2;
          HSITRIM at 0 range 3 .. 7;
-         Unmapped2 at 0 range 8 .. 15;
          HSE_On at 0 range 16 .. 16;
          HSE_Rdy at 0 range 17 .. 17;
-         Unmapped3 at 0 range 18 .. 23;
          PLLON at 0 range 24 .. 24;
          PLLRDY at 0 range 25 .. 25;
          PLLI2SON at 0 range 26 .. 26;
          PLLI2SRDY at 0 range 27 .. 27;
-         Unmapped4 at 0 range  28 .. 31;
+         Unmapped at 0 range  28 .. 31;
       end record;
 
    type RCC_CFGR_Register is
@@ -119,7 +113,6 @@ package Registers.Stm32f4.Rcc is
          SW : Clock_Source;
          SWS : Clock_Source;
          HPRE : AHB_Prescaler_Value;
-         Reserved : Hal.Unmapped_Range (1 .. 2);
          PPRE1 : APB_Prescaler_Value;
          PPRE2 : APB_Prescaler_Value;
          RTCPRE : RTC_Prescaler_Value;
@@ -138,7 +131,6 @@ package Registers.Stm32f4.Rcc is
          SW at 0 range 0 .. 1;
          SWS at 0 range 2 .. 3;
          HPRE at 0 range 4 .. 7;
-         Reserved at 0 range 8 .. 9;
          PPRE1 at 0 range 10 .. 12;
          PPRE2 at 0 range 13 .. 15;
          RTCPRE at 0 range 16 .. 20;
@@ -189,12 +181,11 @@ package Registers.Stm32f4.Rcc is
    type RCC_AHB2ENR_Register is
       record
          DCMIEN : Binary_State;
-         Unmapped1 : Hal.Unmapped_Range (1 .. 3);
          CRYPEN    : Binary_State;
          HASHEN    : Binary_State;
          RNGEN     : Binary_State;
          OTGFSEN   : Binary_State;
-         Unmapped2 : Hal.Unmapped_Range (1 .. 23);
+         Unmapped : Hal.Unmapped_Range (1 .. 23);
       end record with
      Volatile_Full_Access,
      Bit_Order => System.Low_Order_First,
@@ -203,25 +194,21 @@ package Registers.Stm32f4.Rcc is
    for RCC_AHB2ENR_Register use
       record
          DCMIEN at 0 range 0 .. 0;
-         Unmapped1 at 0 range 1 .. 3;
          CRYPEN at 0 range 4 .. 4;
          HASHEN at 0 range 5 .. 5;
          RNGEN at 0 range 6 .. 6;
          OTGFSEN at 0 range 7 .. 7;
-         Unmapped2 at 0 range 8 .. 31;
+         Unmapped at 0 range 8 .. 31;
       end record;
 
    type RCC_PLLCFGR_Register is
       record
          PLLM : PLLM_Values;
          PLLN : PLLN_Values;
-         Unmapped1 : Hal.Unmapped_Range (1 .. 1);
          PLLP : PLLP_Prescaler;
-         Unmapped2 : Hal.Unmapped_Range (1 .. 4);
          PLLSRC : PLL_Source;
-         Unmapped3 : Hal.Unmapped_Range (1 .. 1);
          PLLQ : PLLQ_Values;
-         Unmapped4 : Hal.Unmapped_Range (1 .. 4);
+         Unmapped : Hal.Unmapped_Range (1 .. 4);
       end record with
      Volatile_Full_Access,
      Bit_Order => System.Low_Order_First,
@@ -231,13 +218,10 @@ package Registers.Stm32f4.Rcc is
       record
          PLLM at 0 range 0 .. 5;
          PLLN at 0 range 6 .. 14;
-         Unmapped1 at 0 range 15 .. 15;
          PLLP at 0 range 16 .. 17;
-         Unmapped2 at 0 range 18 .. 21;
          PLLSRC at 0 range 22 .. 22;
-         Unmapped3 at 0 range 23 .. 23;
          PLLQ at 0 range 24 .. 27;
-         Unmapped4 at 0 range 28 .. 31;
+         Unmapped at 0 range 28 .. 31;
       end record;
 
    type RCC_APB1ENR_Register is
@@ -251,12 +235,9 @@ package Registers.Stm32f4.Rcc is
          TIM12_EN : Binary_State;
          TIM13_EN : Binary_State;
          TIM14_EN : Binary_State;
-         Reserved_1 : Hal.Unmapped_Range (1 .. 2);
          WWDG_En : Binary_State;
-         Reserved_2 : Hal.Unmapped_Range (1 .. 2);
          SPI2_EN : Binary_State;
          SPI3_EN : Binary_State;
-         Reserved_3 : Hal.Unmapped_Range (1 .. 1);
          USART2_EN : Binary_State;
          USART3_EN : Binary_State;
          UART4_EN : Binary_State;
@@ -264,10 +245,8 @@ package Registers.Stm32f4.Rcc is
          I2C1_EN : Binary_State;
          I2C2_EN : Binary_State;
          I2C3_EN : Binary_State;
-         Reserved_4 : Hal.Unmapped_Range (1 .. 1);
          CAN1_EN : Binary_State;
          CAN2_EN  : Binary_State;
-         Reserved_5 : Hal.Unmapped_Range (1 .. 1);
          PWR_EN : Binary_State;
          DAC_EN : Binary_State;
          UART7_EN : Binary_State;
@@ -288,12 +267,9 @@ package Registers.Stm32f4.Rcc is
          TIM12_EN at 0 range 6 .. 6;
          TIM13_EN at 0 range 7 .. 7;
          TIM14_EN at 0 range 8 .. 8;
-         Reserved_1 at 0 range 9 .. 10;
          WWDG_En at 0 range 11 .. 11;
-         Reserved_2 at 0 range 12 .. 13;
          SPI2_EN at 0 range 14 .. 14;
          SPI3_EN at 0 range 15 .. 15;
-         Reserved_3 at 0 range 16 .. 16;
          USART2_EN at 0 range 17 .. 17;
          USART3_EN at 0 range 18 .. 18;
          UART4_EN at 0 range 19 .. 19;
@@ -301,10 +277,8 @@ package Registers.Stm32f4.Rcc is
          I2C1_EN at 0 range 21 .. 21;
          I2C2_EN at 0 range 22 .. 22;
          I2C3_EN at 0 range 23 .. 23;
-         Reserved_4 at 0 range 24 .. 24;
          CAN1_EN at 0 range 25 .. 25;
          CAN2_EN at 0 range 26 .. 26;
-         Reserved_5 at 0 range 27 .. 27;
          PWR_EN at 0 range 28 .. 28;
          DAC_EN at 0 range 29 .. 29;
          UART7_EN at 0 range 30 .. 30;
@@ -315,10 +289,8 @@ package Registers.Stm32f4.Rcc is
       record
          TIM1_EN : Binary_State;
          TIM8_EN : Binary_State;
-         Unmapped_1 : Hal.Unmapped_Range (1 .. 2);
          USART1_EN : Binary_State;
          USART6_EN : Binary_State;
-         Unmapped_2 : Hal.Unmapped_Range (1 .. 2);
          ADC1_EN : Binary_State;
          ADC2_EN : Binary_State;
          ADC3_EN : Binary_State;
@@ -326,17 +298,14 @@ package Registers.Stm32f4.Rcc is
          SPI1_EN : Binary_State;
          SPI4_EN : Binary_State;
          SYSCFG_EN : Binary_State;
-         Unmapped_3 : Hal.Unmapped_Range (1 .. 1);
          TIM9_EN : Binary_State;
          TIM10_EN : Binary_State;
          TIM11_EN : Binary_State;
-         Unmapped_4 : Hal.Unmapped_Range (1 .. 1);
          SPI5_EN : Binary_State;
          SPI6_EN : Binary_State;
          SAI1_EN : Binary_State;
-         Unmapped_5 : Hal.Unmapped_Range (1 .. 3);
          LTDC_EN : Binary_State;
-         Unmapped_6 : Hal.Unmapped_Range (1 .. 5);
+         Unmapped : Hal.Unmapped_Range (1 .. 5);
       end record with
      Volatile_Full_Access,
      Bit_Order => System.Low_Order_First,
@@ -346,10 +315,8 @@ package Registers.Stm32f4.Rcc is
       record
          TIM1_EN at 0 range 0 .. 0;
          TIM8_EN at 0 range 1 .. 1;
-         Unmapped_1 at 0 range 2 .. 3;
          USART1_EN at 0 range 4 .. 4;
          USART6_EN at 0 range 5 .. 5;
-         Unmapped_2 at 0 range 6 .. 7;
          ADC1_EN at 0 range 8 .. 8;
          ADC2_EN at 0 range 9 .. 9;
          ADC3_EN at 0 range 10 .. 10;
@@ -357,17 +324,14 @@ package Registers.Stm32f4.Rcc is
          SPI1_EN at 0 range 12 .. 12;
          SPI4_EN at 0 range 13 .. 13;
          SYSCFG_EN at 0 range 14 .. 14;
-         Unmapped_3 at 0 range 15 .. 15;
          TIM9_EN at 0 range 16 .. 16;
          TIM10_EN at 0 range 17 .. 17;
          TIM11_EN at 0 range 18 .. 18;
-         Unmapped_4 at 0 range 19 .. 19;
          SPI5_EN at 0 range 20 .. 20;
          SPI6_EN at 0 range 21 .. 21;
          SAI1_EN at 0 range 22 .. 22;
-         Unmapped_5 at 0 range 23 .. 25;
          LTDC_EN at 0 range 26 .. 26;
-         Unmapped_6 at 0 range 27 .. 31;
+         Unmapped at 0 range 27 .. 31;
       end record;
 
 end Registers.Stm32f4.Rcc;
