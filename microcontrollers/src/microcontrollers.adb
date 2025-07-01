@@ -1,6 +1,8 @@
 with Hal.Stm32.Stm32f429;
 with Registers.Stm32f4;
 
+with System.BB.CPU_Primitives;
+
 procedure Microcontrollers is
 begin
    declare

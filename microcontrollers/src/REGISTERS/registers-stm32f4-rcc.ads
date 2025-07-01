@@ -88,7 +88,7 @@ package Registers.Stm32f4.Rcc is
          PLLRDY : Binary_State;
          PLLI2SON : Binary_State;
          PLLI2SRDY : Binary_State;
-         Unmapped : Hal.Unmapped_Range (1 .. 4);
+         --  Unmapped : Hal.Unmapped_Range (1 .. 4);
       end record with
      Volatile_Full_Access,
      Bit_Order => System.Low_Order_First,
@@ -105,7 +105,7 @@ package Registers.Stm32f4.Rcc is
          PLLRDY at 0 range 25 .. 25;
          PLLI2SON at 0 range 26 .. 26;
          PLLI2SRDY at 0 range 27 .. 27;
-         Unmapped at 0 range  28 .. 31;
+         --  Unmapped at 0 range  28 .. 31;
       end record;
 
    type RCC_CFGR_Register is
