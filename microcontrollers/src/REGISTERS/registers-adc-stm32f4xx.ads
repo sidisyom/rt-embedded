@@ -1,6 +1,21 @@
+with Interfaces;
 with System;
 
 package Registers.Adc.Stm32f4xx is
+
+   --  Address definitions (currently supporting only ADC1)
+   ADCs_Base_Address : constant := 16#4001_2000#;
+   ADC1_Base_Address : constant := ADCs_Base_Address + 16#0000_0000#;
+   ADC1_SR_Address   : constant := ADC1_Base_Address + 16#00#;
+   ADC1_CR1_Address  : constant := ADC1_Base_Address + 16#04#;
+   ADC1_CR2_Address  : constant := ADC1_Base_Address + 16#08#;
+   ADC1_SMPR1_Address : constant := ADC1_Base_Address + 16#0C#;
+   ADC1_SMPR2_Address : constant := ADC1_Base_Address + 16#10#;
+   ADC1_SQR1_Address : constant := ADC1_Base_Address + 16#2C#;
+   ADC1_SQR2_Address : constant := ADC1_Base_Address + 16#30#;
+   ADC1_SQR3_Address  : constant := ADC1_Base_Address + 16#34#;
+   ADC1_DR_Address    : constant := ADC1_Base_Address + 16#4C#;
+   ADC_CSR_Address    : constant := ADC1_Base_Address + 16#300#;
 
    type ADC_Channel is range 0 .. 18 with Size => 5;
    type Conversion_Count is range 0 .. 15 with Size => 4;
@@ -292,5 +307,18 @@ package Registers.Adc.Stm32f4xx is
          STRT3 at 0 range 20 .. 20;
          OVR3 at 0 range 21 .. 21;
       end record;
+
+   --   Access points
+   --   ADC1 is the only ADC module supported at the moment
+   ADC1_CR1_Reg       : ADC_CR1_Register with Import, Address => System'To_Address (ADC1_CR1_Address);
+   ADC1_CR2_Reg       : ADC_CR2_Register with Import, Address => System'To_Address (ADC1_CR2_Address);
+   ADC1_SQR1_Reg      : ADC_SQR1_Register with Import, Address => System'To_Address (ADC1_SQR1_Address);
+   ADC1_SQR2_Reg      : ADC_SQR2_Register with Import, Address => System'To_Address (ADC1_SQR2_Address);
+   ADC1_SQR3_Reg      : ADC_SQR3_Register with Import, Address => System'To_Address (ADC1_SQR3_Address);
+   ADC1_SMPR1_Reg     : ADC_SMPR1_Register with Import, Address => System'To_Address (ADC1_SMPR1_Address);
+   ADC1_SMPR2_Reg     : ADC_SMPR2_Register with Import, Address => System'To_Address (ADC1_SMPR2_Address);
+   ADC1_DR_Reg        : Interfaces.Unsigned_16 with Import, Address => System'To_Address (ADC1_DR_Address); --   Conversion data must be right-aligned (i.e. in "ADC_CR2", also assume little-endian)
+   ADC1_SR_Reg        : ADC_SR_Register with Import, Address => System'To_Address (ADC1_SR_Address);
+   ADC_CSR_Reg : ADC_CSR_Register with Import, Address => System'To_Address (ADC_CSR_Address); --   That is common to all ADCs so doesn't need to be declared per ADC
 
 end Registers.Adc.Stm32f4xx;
