@@ -3,15 +3,6 @@ with System;
 
 package Registers.Stm32f4.Gpio is
 
-   type Pin_Mode is (Input,
-                     Output,
-                     Alternate_Function,
-                     Analog) with Size => 2;
-   for Pin_Mode use (Input => 2#00#,
-                     Output => 2#01#,
-                     Alternate_Function => 2#10#,
-                     Analog => 2#11#);
-
    type Port_Speed is (Low,
                        Medium,
                        High,
@@ -61,7 +52,7 @@ package Registers.Stm32f4.Gpio is
                                AF14 => 2#1110#,
                                AF15 => 2#1111#);
 
-   type MODER_Register is array (Registers.Stm32f4.GPIO_Pin) of Registers.Stm32f4.Pin_Mode with
+   type MODER_Register is array (GPIO_Pin) of Pin_Mode with
      Volatile_Components,
      Volatile_Full_Access,
      Size => 32,
