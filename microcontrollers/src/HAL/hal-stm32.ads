@@ -7,6 +7,7 @@ package Hal.Stm32 is
    type Pin_Mode is (Input, Output, Alternate_Function, Analog);
    type Binary_State is (Off, On);
 
+   --   Probably, best not to inline the To_Internal_** functions as these are called quite often
    function To_Internal_Port (P : GPIO_Port) return Registers.GPIO_Port is (case P is
                                                                                 when A => Registers.A,
                                                                                 when B => Registers.B,
