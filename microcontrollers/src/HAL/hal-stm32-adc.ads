@@ -16,7 +16,7 @@ package Hal.Stm32.Adc is
    type Conversion_Type is (Continuous, One_Shot);
    type Conversion_Interrupt_Status is (Enabled, Disabled);
 
-   --   Probably, best not to inline the To_Internal_** functions as these are called quite often
+   --   Probably, best not to inline the To_Internal_** functions as these are called quite frequently
    function To_Internal_Adc_Channel (C : Channel_Number)
                                      return Registers.Adc.Stm32f4xx.ADC_Channel is (Registers.Adc.Stm32f4xx.ADC_Channel (C));
    function To_Internal_Adc_Channel_Sampling_Time (S : Channel_Sampling_Time)
@@ -34,12 +34,4 @@ package Hal.Stm32.Adc is
                                                                                                                                                    when Right => Registers.Adc.Stm32f4xx.Right,
                                                                                                                                                    when Left  => Registers.Adc.Stm32f4xx.Left
                                                                                                                                                );
-   --   Temp
-   type My_Type is range 1 .. 3;
-   type My_Array is array (My_Type) of Float;
-   type Your_Array is array (My_Type range <>) of Float;
-
-   MA : My_Array;
-   YAB : Your_Array (1 .. 2);
-   YAU : Your_Array := (1.1, 2.2);
 end Hal.Stm32.Adc;

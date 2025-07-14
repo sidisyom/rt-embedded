@@ -32,11 +32,4 @@ package Hal.Stm32 is
    function To_Internal_Binary_State (S : Binary_State) return Registers.Binary_State is (case S is
                                                                                              when Off => Registers.Off,
                                                                                              when On => Registers.On);
-   --   TODO: Move to GPIO specific package
-   type GPIO_Configuration_Request is
-      record
-         Port : GPIO_Port;
-         Pin  : GPIO_Pin;
-         Mode : Pin_Mode := Output;
-      end record;
 end Hal.Stm32;

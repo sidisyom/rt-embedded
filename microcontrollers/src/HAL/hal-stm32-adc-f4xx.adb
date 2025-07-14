@@ -113,30 +113,5 @@ package body Hal.Stm32.Adc.f4xx is
       end;
       --   Set interrupts enabled
       Registers.Adc.Stm32f4xx.ADC1_CR1_Reg.EOCIE := (if CR.CIS = Enabled then Registers.On else Registers.Off);
-
-      --  ****************************************************************************************************
-      --   TEMP
-      for I in My_Type'Range loop
-         case I is
-            when 1 => raise Constraint_Error;
-            when 2 => raise Constraint_Error;
-            when 3 => raise Constraint_Error;
-         end case;
-      end loop;
-
-      for I in MA'Range loop
-         case I is
-            when 1 => raise Constraint_Error;
-            when 2 => raise Constraint_Error;
-            when 3 => raise Constraint_Error;
-         end case;
-      end loop;
-
-      for I in YAB'Range loop
-         case I is
-            when 1 => raise Constraint_Error;
-            when 2 => raise Constraint_Error;
-         end case;
-      end loop;
    end Configure;
 end Hal.Stm32.Adc.f4xx;
