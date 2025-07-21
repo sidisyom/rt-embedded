@@ -6,8 +6,9 @@ package Hal.Stm32.Adc.f4xx is
          Conversions : Conversion_Sequence (1 .. Total_Conversions);
          Sampling_Times : Channel_Sampling_Configuration (0 .. Channels);
          Data_Alignment : Conversion_Data_Alignment;
-         CT             : Conversion_Type;
-         CIS            : Conversion_Interrupt_Status;
+         Conv_Type : Conversion_Type;
+         Conversion_Interrupt : Conversion_Interrupt_Status;
+         Scan_Md : Scan_Mode;
       end record;
    procedure Configure (CR : ADC_Configuration_Request);
 

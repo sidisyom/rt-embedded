@@ -6,7 +6,7 @@ project Microcontrollers is
    for Object_Dir use "obj/" & Microcontrollers_Config.Build_Profile;
    for Create_Missing_Dirs use "True";
    for Exec_Dir use "bin";
-   for Main use ("hal_sandbox.adb");
+   for Main use ("hal_sandbox.adb", "main.adb");
    for Target use "arm-eabi";
    for Runtime ("ada") use "ravenscar-full-stm32f429disco";
    --  for Runtime ("ada") use "/home/savvas/.local/share/alire/toolchains/gnat_arm_elf_14.2.1_524d4d41/arm-eabi/lib/gnat/embedded-stm32f429disco";

@@ -14,55 +14,67 @@ package body Hal.Stm32.Adc.f4xx is
       --   Handle conversions
       if CR.Conversions'Length <= 6 then
          for I in CR.Conversions'Range loop
-            case I is
-               when 1 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ1 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 2 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ2 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 3 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ3 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 4 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ4 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 5 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ5 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 6 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ6 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when others => raise Constraint_Error; --   Can be removed if explicit range is used (and not the 8-bit base type range)
-            end case;
+            declare
+               CH : Registers.Adc.Stm32f4xx.ADC_Channel renames To_Internal_Adc_Channel (CR.Conversions (I));
+            begin
+               case I is
+                  when 1 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ1 := CH;
+                  when 2 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ2 := CH;
+                  when 3 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ3 := CH;
+                  when 4 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ4 := CH;
+                  when 5 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ5 := CH;
+                  when 6 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ6 := CH;
+                  when others => raise Constraint_Error; --   "I" is taken to be the 8-bit base type range
+               end case;
+            end;
          end loop;
       elsif CR.Conversions'Length > 6 and then CR.Conversions'Length <= 12 then
          for I in CR.Conversions'Range loop
-            case I is
-               when 1 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ1 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 2 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ2 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 3 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ3 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 4 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ4 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 5 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ5 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 6 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ6 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 7 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ7 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 8 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ8 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 9 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ9 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 10 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ10 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 11 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ11 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 12 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ12 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when others => raise Constraint_Error; --   Can be removed if explicit range is used (and not the 8-bit base type range)
-            end case;
+            declare
+               CH : Registers.Adc.Stm32f4xx.ADC_Channel renames To_Internal_Adc_Channel (CR.Conversions (I));
+            begin
+               case I is
+                  when 1 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ1 := CH;
+                  when 2 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ2 :=  CH;
+                  when 3 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ3 :=  CH;
+                  when 4 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ4 :=  CH;
+                  when 5 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ5 :=  CH;
+                  when 6 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ6 :=  CH;
+                  when 7 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ7 :=  CH;
+                  when 8 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ8 :=  CH;
+                  when 9 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ9 :=  CH;
+                  when 10 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ10 :=  CH;
+                  when 11 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ11 :=  CH;
+                  when 12 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ12 :=  CH;
+                  when others => raise Constraint_Error; --   "I" is taken to be the 8-bit base type range
+               end case;
+            end;
          end loop;
       else
          for I in CR.Conversions'Range loop
-            case I is
-               when 1 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ1 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 2 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ2 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 3 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ3 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 4 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ4 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 5 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ5 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 6 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ6 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 7 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ7 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 8 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ8 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 9 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ9 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 10 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ10 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 11 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ11 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 12 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ12 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 13 => Registers.Adc.Stm32f4xx.ADC1_SQR1_Reg.SQ13 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 14 => Registers.Adc.Stm32f4xx.ADC1_SQR1_Reg.SQ14 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 15 => Registers.Adc.Stm32f4xx.ADC1_SQR1_Reg.SQ15 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when 16 => Registers.Adc.Stm32f4xx.ADC1_SQR1_Reg.SQ16 := To_Internal_Adc_Channel (CR.Conversions (I));
-               when others => raise Constraint_Error; --   Can be removed if explicit range is used (and not the 8-bit base type range)
-            end case;
+            declare
+               CH : Registers.Adc.Stm32f4xx.ADC_Channel renames To_Internal_Adc_Channel (CR.Conversions (I));
+            begin
+               case I is
+                  when 1 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ1 := CH;
+                  when 2 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ2 := CH;
+                  when 3 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ3 := CH;
+                  when 4 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ4 := CH;
+                  when 5 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ5 := CH;
+                  when 6 => Registers.Adc.Stm32f4xx.ADC1_SQR3_Reg.SQ6 := CH;
+                  when 7 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ7 := CH;
+                  when 8 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ8 := CH;
+                  when 9 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ9 := CH;
+                  when 10 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ10 := CH;
+                  when 11 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ11 := CH;
+                  when 12 => Registers.Adc.Stm32f4xx.ADC1_SQR2_Reg.SQ12 := CH;
+                  when 13 => Registers.Adc.Stm32f4xx.ADC1_SQR1_Reg.SQ13 := CH;
+                  when 14 => Registers.Adc.Stm32f4xx.ADC1_SQR1_Reg.SQ14 := CH;
+                  when 15 => Registers.Adc.Stm32f4xx.ADC1_SQR1_Reg.SQ15 := CH;
+                  when 16 => Registers.Adc.Stm32f4xx.ADC1_SQR1_Reg.SQ16 := CH;
+                  when others => raise Constraint_Error; --   "I" is taken to be the 8-bit base type range
+               end case;
+            end;
          end loop;
       end if;
       --   Set sequence length
@@ -96,22 +108,14 @@ package body Hal.Stm32.Adc.f4xx is
             end case;
          end;
       end loop;
-
-      declare
-         Shadow : Registers.Adc.Stm32f4xx.ADC_CR2_Register := Registers.Adc.Stm32f4xx.ADC1_CR2_Reg;
-      begin
-         --   Configure conversion data alignment
-         Shadow.ALIGN := To_Internal_Conversion_Data_Alignment (CR.Data_Alignment);
-         --   Turn ADC module on
-         Shadow.ADON := Registers.On;
-         --   Set convert continuosly/one-shot
-         Shadow.CONT := (if CR.CT = Continuous then Registers.On else Registers.Off);
-         --   Start conversions
-         Shadow.SWSTART := Registers.On;
-         --   Store batch-update
-         Registers.Adc.Stm32f4xx.ADC1_CR2_Reg := Shadow;
-      end;
-      --   Set interrupts enabled
-      Registers.Adc.Stm32f4xx.ADC1_CR1_Reg.EOCIE := (if CR.CIS = Enabled then Registers.On else Registers.Off);
+      --   Can't use a shadow register for batch-stores as some components need to be set only **after** some specific ones have been set (see "SWSTART" in "ADC_CR2")
+      Registers.Adc.Stm32f4xx.ADC1_CR2_Reg.ALIGN := To_Internal_Conversion_Data_Alignment (CR.Data_Alignment);
+      Registers.Adc.Stm32f4xx.ADC1_CR2_Reg.ADON := Registers.On;
+      Registers.Adc.Stm32f4xx.ADC1_CR2_Reg.CONT := Registers.On;
+      Registers.Adc.Stm32f4xx.ADC1_CR2_Reg.SWSTART := Registers.On;
+      --   Set interrupts-enabled
+      Registers.Adc.Stm32f4xx.ADC1_CR1_Reg.EOCIE := (if CR.Conversion_Interrupt = Enabled then Registers.On else Registers.Off);
+      --   Set scan-mode
+      Registers.Adc.Stm32f4xx.ADC1_CR1_Reg.SCAN := (if CR.Scan_Md = Scan_Mode_On then Registers.On else Registers.Off);
    end Configure;
 end Hal.Stm32.Adc.f4xx;

@@ -6,6 +6,7 @@ package Hal.Stm32 is
    type GPIO_Pin is range 0 .. 15;
    type Pin_Mode is (Input, Output, Alternate_Function, Analog);
    type Binary_State is (Off, On);
+   type Scan_Mode is (Scan_Mode_On, Scan_Mode_Off);
 
    --   Probably, best not to inline the To_Internal_** functions as these are called quite often
    function To_Internal_Port (P : GPIO_Port) return Registers.GPIO_Port is (case P is
